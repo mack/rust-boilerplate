@@ -3,8 +3,9 @@ DOCKER_CRED_STORE := $(shell jq -r .credsStore ~/.docker/config.json)
 DOCKER_USER := $(shell docker-credential-$(DOCKER_CRED_STORE) list | jq -r ' . | to_entries[] | select(.key | contains("docker.io")) | last(.value)' | tail -1)
 DOCKER_TAG := latest
 
-PYTHON_PATH?=$(shell pwd)/.bin/python
-export PYTHONPATH=$(PYTHON_PATH)
+CARGO_PATH := $(shell pwd)/.bin/cargo
+PYTHON_PATH := $(shell pwd)/.bin/python
+export PYTHONPATH := $(PYTHON_PATH)
 SHELL := env PATH="$(PYTHON_PATH)/bin:$(PATH)" $(SHELL)
 
 .DEFAULT_GOAL := help
@@ -43,6 +44,10 @@ test: ## Run the tests
 release: ## Compile current package into a new release
 	cargo build --release
 
+.PHONY: run
+run: ## Run current package
+	cargo run
+
 .PHONY: version
 version: ## Print versioning info on common rust tools
 	@rustc --version
@@ -51,7 +56,16 @@ version: ## Print versioning info on common rust tools
 	@rustup --version 2>/dev/null
 	@clippy-driver --version
 
+.PHONY: docs-build
+docs-build: ## Generate docs using mdbook
+	${CARGO_PATH}/bin/mdbook build ./docs
+
+.PHONY: docs-run
+docs-run: ## Run a localhost version of docs
+	${CARGO_PATH}/bin/mdbook watch --open ./docs
+
 .PHONY: setup
-setup: ## Setup and install local development tools (e.g. pre-commit)
+setup: ## Setup and install local development tools (e.g. pre-commit, mdbook)
 	pip3 install --target=${PYTHON_PATH} pre-commit
 	pre-commit install --hook-type commit-msg --hook-type pre-commit
+	cargo install --root=${CARGO_PATH} mdbook

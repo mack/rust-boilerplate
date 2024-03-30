@@ -1,0 +1,6 @@
+[book]
+authors = ["mack"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Rust Boilerplate"
