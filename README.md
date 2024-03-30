@@ -18,6 +18,10 @@ $ make help
 docker-build                   Build the docker image for this application
 docker-push                    Push the docker image to the default container registry
 docker-run                     Run the docker image for this application
-help                           Prints out a formatted list of make commands
-setup                          Setup & install local development tools (e.g. pre-commit)
+help                           Formatted list of make commands
+lint                           Format and lint current package
+release                        Compile current package into a new release
+setup                          Setup and install local development tools (e.g. pre-commit)
+test                           Run the tests
+version                        Print versioning info on common rust tools
 ```

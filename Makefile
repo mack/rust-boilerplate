@@ -10,7 +10,7 @@ SHELL := env PATH="$(PYTHON_PATH)/bin:$(PATH)" $(SHELL)
 .DEFAULT_GOAL := help
 
 .PHONY: help
-help: ## Prints out a formatted list of make commands
+help: ## Formatted list of make commands
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: docker-build
@@ -30,7 +30,28 @@ docker-run: docker-build ## Run the docker image for this application
 docker-push: docker-build ## Push the docker image to the default container registry
 	docker push ${DOCKER_USER}/${APP}:${DOCKER_TAG}
 
+.PHONY: lint
+lint: ## Format and lint current package
+	cargo fmt
+	cargo clippy
+
+.PHONY: test
+test: ## Run the tests
+	cargo test
+
+.PHONY: release
+release: ## Compile current package into a new release
+	cargo build --release
+
+.PHONY: version
+version: ## Print versioning info on common rust tools
+	@rustc --version
+	@cargo --version
+	@rustfmt --version
+	@rustup --version 2>/dev/null
+	@clippy-driver --version
+
 .PHONY: setup
-setup: ## Setup & install local development tools (e.g. pre-commit)
+setup: ## Setup and install local development tools (e.g. pre-commit)
 	pip3 install --target=${PYTHON_PATH} pre-commit
 	pre-commit install --hook-type commit-msg --hook-type pre-commit
