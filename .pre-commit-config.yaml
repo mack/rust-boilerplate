@@ -1,15 +1,9 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v3.2.0
-    hooks:
-      - id: conventional-pre-commit
-        stages: [commit-msg]
-        args: []
-
+  # Standard pre-commit checks
+  # See https://pre-commit.com for more information
+  # See https://pre-commit.com/hooks.html for more hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
@@ -17,3 +11,21 @@ repos:
       - id: detect-private-key
       - id: check-merge-conflict
       - id: check-added-large-files
+
+  # Forces conventional commit messages (e.g. 'feat: super cool feature')
+  # See https://www.conventionalcommits.org/en/v1.0.0 for more information
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.2.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []
+
+  # Forces standard rust formatting, verifies linting, and that project compiles
+  # See https://github.com/doublify/pre-commit-rust for more information
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+      - id: fmt
+      - id: cargo-check
+      - id: clippy
