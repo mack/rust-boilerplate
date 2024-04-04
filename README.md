@@ -43,5 +43,5 @@ release                        Compile current package into a new release
 setup                          Setup and install local development tools (e.g. pre-commit, mdbook)
 test-all                       Run the ignored tests
 test                           Run the tests
-version                        Print versioning info on common rust tools
+version                        Print versioning info on common tools
 ```

@@ -49,12 +49,15 @@ release: ## Compile current package into a new release
 	cargo build --release
 
 .PHONY: version
-version: ## Print versioning info on common rust tools
+version: ## Print versioning info on common tools
 	@rustc --version
 	@cargo --version
 	@rustfmt --version
 	@rustup --version 2>/dev/null
 	@clippy-driver --version
+	@pre-commit --version
+	@${CARGO_PATH}/bin/mdbook --version
+	@docker --version
 
 .PHONY: docs-build
 docs-build: ## Generate docs using mdbook
