@@ -12,16 +12,17 @@ A generic Rust application template that (hopefully) follows best practices.
     1. Update the name in [Cargo.toml](./Cargo.toml).
     2. Update author, title, etc in [book.toml](./docs/book.toml).
 2. Setup the local environment using `make setup`.
-3. Verify everything works by running `make run`. You should see the following output:
+3. Verify everything works by running `cargo run -- hello -n 'John Wick'`. You should see the following output:
 ```
 cargo run
-    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
-     Running `target/debug/rust-boilerplate`
-Hello, John Wick & world!
+    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/rust-boilerplate hello -n 'John Wick'`
+Hello, John Wick!
 ```
 4. 🎉 Skip the boilerplate and get straight to developing!
 
 ## Features
+- Basic CLI application to get you started.
 - Containerized application with Docker.
 - Precommit to validate format, linting, compilation, and more.
 - Generate Rust documentation using mdbook.
@@ -39,8 +40,8 @@ docs-run                       Run a localhost version of docs
 help                           Formatted list of make commands
 lint                           Format and lint current package
 release                        Compile current package into a new release
-run                            Run current package
 setup                          Setup and install local development tools (e.g. pre-commit, mdbook)
+test-all                       Run the ignored tests
 test                           Run the tests
 version                        Print versioning info on common rust tools
 ```

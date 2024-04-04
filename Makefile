@@ -38,15 +38,15 @@ lint: ## Format and lint current package
 
 .PHONY: test
 test: ## Run the tests
-	cargo test
+	cargo test -- --include-ignored
+
+.PHONY: test-ignored
+test-all: ## Run the ignored tests
+	cargo test -- --ignored
 
 .PHONY: release
 release: ## Compile current package into a new release
 	cargo build --release
-
-.PHONY: run
-run: ## Run current package
-	cargo run
 
 .PHONY: version
 version: ## Print versioning info on common rust tools
